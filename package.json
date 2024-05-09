@@ -7,7 +7,6 @@
     "test": "mocha",
     "start": "node server.mjs",
     "dev": "nodemon server.mjs"
-
   },
   "keywords": [],
   "author": "",
