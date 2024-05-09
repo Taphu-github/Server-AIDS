@@ -105,3 +105,5 @@ client.on('message', function (topic, message) {
   }
 });
 client.subscribe('animal');
+
+export default app
