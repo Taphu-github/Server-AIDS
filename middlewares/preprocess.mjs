@@ -51,6 +51,19 @@ export default async function preprocessAnimalData(req, res, next){
             // Accumulate counts for other animals similarly...
         }
         });
+        const tot=["Bear","Boar","Cattle","Deer","Elephant","Horse","Monkey"];
+
+        const sum = arr => arr.reduce((acc, currentValue) => acc + currentValue, 0);
+        const sums=[]
+        
+        sums.push(sum(bearArray));
+        sums.push(sum(boarArray));
+        sums.push(sum(cattleArray));
+        sums.push(sum(deerArray));
+        sums.push(sum(elephantArray));
+        sums.push(sum(horseArray));
+        sums.push(sum(monkeyArray));
+
         const returnobj={
             'Dates': uniqueDates,
             'Bear':bearArray,
@@ -59,7 +72,8 @@ export default async function preprocessAnimalData(req, res, next){
             'Deer':deerArray,
             'Elephant':elephantArray,
             'Horse':horseArray,
-            'Monkey':monkeyArray
+            'Monkey':monkeyArray.at,
+            'Sums':sums
         };
         // Store the preprocessed data in res.locals
         res.locals.animals=returnobj;
