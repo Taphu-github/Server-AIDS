@@ -8,6 +8,19 @@ import preprocessAnimalData from "../middlewares/preprocess.mjs";
 const router = express.Router();
 router.use(preprocessAnimalData);
 
+router.get("/getanimal", async (req, res) => {
+  try {
+    // Access preprocessed data from res.locals (assuming it's an object)
+    Animal.find().then(owners => res.json(owners)).catch(err=> res.status(400).json('Error: '+ err));
+
+    // Send the preprocessed data using res.json
+    
+  } catch (err) {
+    console.error(err); // Log the error for debugging
+    res.setHeader('Content-Type', 'application/json');
+    res.status(500).json('Error: Internal server error'); // Send a generic error message
+  }});
+
 router.get("/getanimals", async (req, res) => {
   try {
     // Access preprocessed data from res.locals (assuming it's an object)
