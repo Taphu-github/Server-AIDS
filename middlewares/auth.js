@@ -3,6 +3,8 @@ const User=require('../models/users.js');
 
 
 const authenticate = async (req, res, next) => {
+  res.setHeader('Content-Type', 'application/json');
+
   const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {

@@ -1,7 +1,5 @@
 import express from "express";
 import mqtt from 'mqtt';
-import FileSaver from 'file-saver';
-import fs from 'fs';
 import cors from 'cors';
 import "express-async-errors";
 import analysis from "./routes/analysis.mjs";
@@ -24,7 +22,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('Welcome to my server!');
+  res.json('Welcome to my server!');
 });
 
 app.use('/auth', authRoutes);

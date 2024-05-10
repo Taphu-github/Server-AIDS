@@ -2,7 +2,10 @@ import Animal from '../models/animal.mjs';
 import moment from 'moment';
 
 export default async function preprocessAnimalData(req, res, next){
+    res.setHeader('Content-Type', 'application/json');
+
     try {
+        
         // Fetch animal data from the database
         const data=await Animal.find()
         console.log(data);

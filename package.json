@@ -5,7 +5,7 @@
   "main": "server.mjs",
   "scripts": {
     "test": "mocha",
-    "start": "node server.mjs",
+    "start": "vercel dev",
     "dev": "nodemon server.mjs"
   },
   "keywords": [],

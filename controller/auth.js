@@ -12,6 +12,7 @@ const register = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ username, email, password: hashedPassword });
     await user.save();
+    res.setHeader('Content-Type', 'application/json');
     res.json({ message: 'Registration successful' });
   } catch (error) {
     next(error);
@@ -21,6 +22,8 @@ const register = async (req, res, next) => {
 // Login with an existing user
 const login = async (req, res, next) => {
   const { username, password } = req.body;
+  res.setHeader('Content-Type', 'application/json');
+
 
   try {
     const user = await User.findOne({ username });
