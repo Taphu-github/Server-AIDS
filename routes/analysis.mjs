@@ -1,6 +1,7 @@
 import express from "express";
 import Animal from "../models/animal.mjs";
 import Owner from "../models/owner.mjs";
+import System from "../models/system.mjs";
 import AnimalCategory from "../models/animal_category.mjs";
 import { authenticate } from "../middlewares/auth.js";
 import preprocessAnimalData from "../middlewares/preprocess.mjs";
@@ -53,7 +54,7 @@ router.post("/addOwner", authenticate,(req, res) => {
   owner.save().then(()=> res.json('succesfully added owner')).catch(err=> res.status(400).json("Error: "+ err));
 });
 
-router.get("/getOwner").get((req, res) => {
+router.get("/getOwner", async(req, res) => {
   res.setHeader('Content-Type', 'application/json');
   Owner.find().then(owners => res.json(owners)).catch(err=> res.status(400).json('Error: '+ err));
 });
@@ -163,19 +164,44 @@ router.route('/deleteAnimalCat/:id').delete((req, res)=>{
 router.route("/addSystem").post((req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
+  const sid=req.body.sid;
+  const sysname=req.body.sysname;
+  const password=req.body.password;
+  const location= req.body.location;
+  const type= req.body.type;
   const cid=req.body.cid;
-  const ownername=req.body.ownername;
-  const contactNo= req.body.contactNo;
-  const emailID= req.body.emailID;
 
-  const owner= new Owner({
-    cid,
-    ownername,
-    contactNo,
-    emailID
+  const system= new System({
+  sid,
+  sysname,
+  password,
+  location,
+  type,
+  cid
   });
 
-  owner.save().then(()=> res.json('succesfully added owner')).catch(err=> res.status(400).json("Error: "+ err));
+  system.save().then(()=> res.json('succesfully added system')).catch(err=> res.status(400).json("Error: "+ err));
 });
 
+
+router.route("/loginSystem").post(async(req, res)=>{
+const { sysname, password } = req.body;
+  res.setHeader('Content-Type', 'application/json');
+
+
+  try {
+    const system = await System.findOne({ sysname });
+    if (!system) {
+      return res.status(404).json({ message: 'System not found' });
+    }
+
+    const passwordMatch = (system.password === password);
+    if (!passwordMatch) {
+      return res.status(401).json({ message: 'Incorrect password' });
+    }
+    res.json({ message: "Succesfully logged in" });
+  } catch (error) {
+    return res.status(404).json({ message: 'login unsucessful' });
+  }
+});
 export default router;

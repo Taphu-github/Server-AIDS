@@ -8,7 +8,6 @@ export default async function preprocessAnimalData(req, res, next){
         
         // Fetch animal data from the database
         const data=await Animal.find()
-        console.log(data);
         const uniqueDates = [...new Set(data.map(({ enroachDate }) => moment(enroachDate).format('YYYY-MM-DD')))].sort();
 
         // Step 2: Initialize seven arrays filled with zeros
